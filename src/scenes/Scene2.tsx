@@ -44,7 +44,7 @@ if (typeof document !== "undefined") {
  * Income added in each cycle (non-rounded, two cycles in the hundreds).
  * Cumulative total reaches $121,095.
  */
-const INCOME_INCREMENTS = [473, 52_847, 847, 41_451, 25_477];
+const INCOME_INCREMENTS = [17_963, 473, 24_847, 847, 41_451, 25_477];
 
 /** Taxes as a fraction of income. */
 const TAX_RATE = 0.3;
@@ -83,6 +83,7 @@ const CUMULATIVE_TAX = CUMULATIVE_INCOME.map((v) => Math.round(v * TAX_RATE));
 
 const CYCLE_FRAMES = ROLL_FRAMES + DELAY_FRAMES + ROLL_FRAMES + POST_CYCLE_PAUSE;
 
+const PRIMARY = "#9FE963";
 const ORANGE = "#F97316";
 
 /** Scrambles from `from` toward `to` over ROLL_FRAMES, decelerating into the target. */
@@ -193,7 +194,7 @@ export const IncomeTrackerOverlay: React.FC = () => {
             fontSize: 80,
             fontWeight: 900,
             fontVariationSettings: '"wdth" 65',
-            color: "white",
+            color: PRIMARY,
             lineHeight: 1,
           }}
         >
@@ -204,7 +205,7 @@ export const IncomeTrackerOverlay: React.FC = () => {
             fontFamily: '"RobotoMono", "Courier New", monospace',
             fontSize: 160,
             fontWeight: 600,
-            color: "white",
+            color: PRIMARY,
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
           }}
