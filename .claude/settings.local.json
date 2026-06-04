@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx remotion:*)",
+      "Bash(grep -E '\\\\.\\(mp3|wav|m4a|srt|vtt\\)$')",
+      "Bash(npm install:*)",
+      "Bash(ffprobe *)",
+      "Bash(node -e ' *)",
+      "Bash(git add *)"
+    ]
+  }
+}
