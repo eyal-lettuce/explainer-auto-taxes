@@ -3,30 +3,11 @@ import {
   useCurrentFrame,
   useVideoConfig,
   interpolate,
-  staticFile,
-  delayRender,
-  continueRender,
 } from "remotion";
 import type { SceneConfig } from "../SceneConfig";
+import "../fonts";
 
 const PRIMARY = "#9FE963";
-
-// Font: ABC Gravity Variable — wdth 50 = compressed, wght fixed at 900
-const fontHandle =
-  typeof document !== "undefined" ? delayRender("Loading ABCGravity font") : null;
-
-if (typeof document !== "undefined") {
-  const face = new FontFace(
-    "ABCGravity",
-    `url(${staticFile("ABCGravityVariable.ttf")})`,
-    { weight: "900", style: "normal" }
-  );
-  document.fonts.add(face);
-  face
-    .load()
-    .then(() => continueRender(fontHandle!))
-    .catch(() => continueRender(fontHandle!));
-}
 
 export const TitleOverlay: React.FC = () => {
   const frame = useCurrentFrame();

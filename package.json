@@ -14,6 +14,7 @@
   "type": "commonjs",
   "dependencies": {
     "@remotion/cli": "^4.0.436",
+    "@remotion/fonts": "^4.0.472",
     "@remotion/media": "^4.0.436",
     "mediabunny": "^1.39.2",
     "openai": "^6.32.0",

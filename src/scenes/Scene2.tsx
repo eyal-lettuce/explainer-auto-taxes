@@ -2,41 +2,9 @@ import React from "react";
 import {
   useCurrentFrame,
   interpolate,
-  staticFile,
-  delayRender,
-  continueRender,
 } from "remotion";
 import type { SceneConfig } from "../SceneConfig";
-
-// ─── Font loading ─────────────────────────────────────────────────────────────
-const _fhGravity =
-  typeof document !== "undefined" ? delayRender("Scene2: ABCGravity") : null;
-const _fhMono =
-  typeof document !== "undefined" ? delayRender("Scene2: RobotoMono") : null;
-
-if (typeof document !== "undefined") {
-  const gravity = new FontFace(
-    "ABCGravity",
-    `url(${staticFile("ABCGravityVariable.ttf")})`,
-    { weight: "900", style: "normal" }
-  );
-  document.fonts.add(gravity);
-  gravity
-    .load()
-    .then(() => continueRender(_fhGravity!))
-    .catch(() => continueRender(_fhGravity!));
-
-  const mono = new FontFace(
-    "RobotoMono",
-    `url(${staticFile("RobotoMono-SemiBold.woff2")})`,
-    { weight: "600", style: "normal" }
-  );
-  document.fonts.add(mono);
-  mono
-    .load()
-    .then(() => continueRender(_fhMono!))
-    .catch(() => continueRender(_fhMono!));
-}
+import "../fonts";
 
 // ─── Parameters ──────────────────────────────────────────────────────────────
 

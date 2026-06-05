@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Sequence, staticFile, useCurrentFrame, interpolate } from "remotion";
+import { AbsoluteFill, Sequence, staticFile, useCurrentFrame, useVideoConfig, interpolate } from "remotion";
 import { Audio } from "@remotion/media";
 import { AnimatedBackground } from "./AnimatedBackground";
 import { ChromaKeyVideo } from "./ChromaKeyVideo";
@@ -44,9 +44,21 @@ export type Props = {
 
 export const Timeline: React.FC<Props> = ({ segmentFrames }) => {
   let offset = 0;
+  const { durationInFrames } = useVideoConfig();
 
   return (
     <AbsoluteFill>
+      <Audio
+        src={staticFile("Wutif - Lauren Duski.mp3")}
+        volume={(f) =>
+          interpolate(
+            f,
+            [0, durationInFrames - 5 * 24, durationInFrames - 4 * 24, durationInFrames - 2 * 24, durationInFrames],
+            [0.07, 0.07, 0.5, 0.5, 0],
+            { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+          )
+        }
+      />
       <AnimatedBackground segmentFrames={segmentFrames} />
 
       {segments.map((segment, i) => {
@@ -86,6 +98,8 @@ export const Timeline: React.FC<Props> = ({ segmentFrames }) => {
               )}
             </Sequence>
 
+            {segment.overlay && <segment.overlay />}
+
             <Sequence durationInFrames={duration - extraFrames}>
               {segment.showVideo === false ? (
                 <Audio src={src} trimBefore={trimStart} trimAfter={trimAfter} />
@@ -111,8 +125,6 @@ export const Timeline: React.FC<Props> = ({ segmentFrames }) => {
                 );
               })()}
             </Sequence>
-
-            {segment.overlay && <segment.overlay />}
           </Sequence>
         );
       })}
