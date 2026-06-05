@@ -54,7 +54,7 @@ export const Timeline: React.FC<Props> = ({ segmentFrames }) => {
           interpolate(
             f,
             [0, durationInFrames - 5 * 24, durationInFrames - 4 * 24, durationInFrames - 2 * 24, durationInFrames],
-            [0.07, 0.07, 0.5, 0.5, 0],
+            [0.2, 0.2, 0.5, 0.5, 0],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
           )
         }
