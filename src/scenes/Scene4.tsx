@@ -5,16 +5,16 @@ import type { SceneConfig } from "../SceneConfig";
 // ── Layout (fractions of 1920×1080) ──────────────────────────────────────────
 const LETTUCE_CX = 0.68;
 const LETTUCE_CY = 0.50;
-const TAX_CX = 0.813;
+const TAX_CX = 0.85;
 const TAX_CY = 0.50;
 
 // ── Sizes (px) ────────────────────────────────────────────────────────────────
-const LETTUCE_SIZE = 230;
-const COG_SIZE = 125;
-const INCOME_COIN_SIZE = 80;
-const TAX_COIN_TRAVEL_SIZE = 52;
-const TAX_PILE_BASE_SIZE = 70;
-const TAX_PILE_INCREMENT = 26;
+const LETTUCE_SIZE = 420;
+const COG_SIZE = 230;
+const INCOME_COIN_SIZE = 140;
+const TAX_COIN_TRAVEL_SIZE = 100;
+const TAX_PILE_BASE_SIZE = 130;
+const TAX_PILE_INCREMENT = 50;
 
 // ── Timing ────────────────────────────────────────────────────────────────────
 const LETTUCE_POP_FRAME = 20;
@@ -45,6 +45,23 @@ const Scene4Overlay: React.FC = () => {
   const activeFrame = Math.max(0, frame - LETTUCE_POP_FRAME);
   const lettuceRotation = -activeFrame * 0.3;
   const cogRotation = activeFrame * 0.5;
+
+  // ── Lettuce bump on coin impact ────────────────────────────────────────────
+  const LETTUCE_BUMP = 0.09;
+  const BUMP_GROW_FRAMES = 10;
+  const lettuceBumpScale = COIN_DROPS.reduce((scale, coin) => {
+    const impactFrame = coin.startFrame + FALL_FRAMES - 4;
+    if (frame < impactFrame) return scale;
+    const elapsed = frame - impactFrame;
+    const growPhase = interpolate(elapsed, [0, BUMP_GROW_FRAMES], [0, 1], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+    const returnSpring = elapsed >= BUMP_GROW_FRAMES
+      ? spring({ frame: elapsed - BUMP_GROW_FRAMES, fps, config: { damping: 8, stiffness: 140, mass: 0.7 } })
+      : 0;
+    return scale + growPhase * (1 - returnSpring) * LETTUCE_BUMP;
+  }, 1);
 
   const lx = LETTUCE_CX * 100;
   const ly = LETTUCE_CY * 100;
@@ -142,7 +159,7 @@ const Scene4Overlay: React.FC = () => {
           top: `${ly}%`,
           width: LETTUCE_SIZE,
           height: LETTUCE_SIZE,
-          transform: `translate(-50%, -50%) scale(${lettucePopScale}) rotate(${lettuceRotation}deg)`,
+          transform: `translate(-50%, -50%) scale(${lettucePopScale * lettuceBumpScale}) rotate(${lettuceRotation}deg)`,
           zIndex: 2,
         }}
       >
