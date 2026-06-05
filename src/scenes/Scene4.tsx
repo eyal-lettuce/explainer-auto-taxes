@@ -48,7 +48,7 @@ const Scene4Overlay: React.FC = () => {
 
   // ── Lettuce bump on coin impact ────────────────────────────────────────────
   const LETTUCE_BUMP = 0.09;
-  const BUMP_GROW_FRAMES = 10;
+  const BUMP_GROW_FRAMES = 6;
   const lettuceBumpScale = COIN_DROPS.reduce((scale, coin) => {
     const impactFrame = coin.startFrame + FALL_FRAMES - 4;
     if (frame < impactFrame) return scale;
